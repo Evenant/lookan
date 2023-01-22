@@ -1,0 +1,14 @@
+*.import
+/.mono
+/.import
+/.vs
+
+
+# Added by cargo
+
+/target
+/Cargo.lock
+
+gdnative-rs-src/Cargo.lock
+gdnative-rs-src/target/
+gdnative-rs-out/*
