@@ -1,10 +1,10 @@
 [package]
-name = "gdnative-rs-src"
+name = "Editor"
 version = "0.1.0"
 edition = "2021"
 
 [dependencies]
 gdnative = "0.11.0"
 
-[workspace]
-members = [ "LuaModules", "Editor",]
+[lib]
+crate-type = [ "cdylib",]
