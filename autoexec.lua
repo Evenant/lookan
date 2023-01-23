@@ -6,14 +6,16 @@ lookan.add_inputevent_handler(function(scancode, shift, ctrl, alt, is_pressed)
 end)
 
 lookan.add_fileopened_handler(function(filepath)
-
+	lookan.print(filepath)
 end)
 
 lookan.add_fileclosed_handler(function(filepath)
+	lookan.print(filepath)
 
 end)
 
 lookan.add_filesaved_handler(function(filepath)
+	lookan.print(filepath)
 
 end)
 
