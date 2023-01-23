@@ -2,10 +2,10 @@
 Lookan is a text editor similar to Vim in that it only uses the keyboard for every single possible action.
 
 # Building
-This project was developed in Godot 3.5.1, so make sure that you open the `project.godot` file with that version.
+This was developed in Godot 3.5.1, so make sure that you open the `project.godot` file with that version.
 Later or earlier versions of Godot may work, but not recommended (for obvious reasons).
 
-Most if not all of the code in this project is written in Rust, go [here](https://www.rust-lang.org) to learn how to install Rust.
+Some parts of this project is  written in Rust, go [here](https://www.rust-lang.org) to learn how to install Rust.
 Check if Rust is installed properly with the following commands:
 ```
 rustup -v
