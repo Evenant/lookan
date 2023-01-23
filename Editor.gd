@@ -6,6 +6,7 @@ var is_saved = true
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	connect("text_changed", self, "_on_text_changed")
+	add_color_region("def","()", Color(200,200,200))
 
 func set_open_file(value):
 	get_parent().emit_signal("file_closed", open_file)

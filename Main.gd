@@ -26,4 +26,4 @@ func _on_filesys_losefocus():
 	$Editor.grab_focus()
 
 func _on_editor_textchanged(filepath, text):
-	pass
+	emit_signal("text_changed", filepath, text)
