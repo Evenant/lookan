@@ -7,4 +7,4 @@ edition = "2021"
 gdnative = "0.11.0"
 
 [workspace]
-members = [ "LuaModules", "Editor",]
+members = [ "LuaModules",]
