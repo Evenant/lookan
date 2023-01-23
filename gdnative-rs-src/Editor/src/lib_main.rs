@@ -13,7 +13,13 @@ pub struct Editor{
 	#[property(set="Self::set_text")]
 	internal_text:String,
 	is_saved:bool,
-	opened_file:Option<String>
+	opened_file:Option<String>,
+	formatter:Vec<formatter::text_format>,
+	cursor:i32,
+	begin:i32,
+	end:i32,
+	selection:bool,
+	readonly:bool
 }
 
 #[methods]
@@ -27,9 +33,9 @@ impl Editor
 			.done();
 	}
 	
-	fn set_text(&self, base: TRef<godot_inherit>, newtext:String)
+	fn set_text(&mut self, base: TRef<godot_inherit>, newtext:String)
 	{
-
+		self.internal_text = newtext;
 	}
 
 	fn new(base:&godot_inherit)->Self
@@ -37,15 +43,25 @@ impl Editor
 		Self{
 			internal_text:String::new(),
 			is_saved:true,
-			opened_file:None
+			opened_file:None,
+			formatter:Vec::new(),
+			cursor:0
 		}
 	}
-
 	#[method]
-    fn _ready(&self, #[base] base: &godot_inherit)
+	fn rerender(&mut self, #[base] base: &godot_inherit)
+	{
+		for s in unsafe{self.internal_text.as_mut_vec()}
+		{
+			let charv:char = *s as char;
+			
+		}
+	}
+	#[method]
+    fn _ready(&mut self, #[base] base: &godot_inherit)
 	{
         godot_print!("Hello world from node {}!", base.to_string());
-
+		self.rerender(base);
     }
 
 	#[method]
@@ -73,7 +89,7 @@ impl Editor
 	}
 
 	#[method]
-	fn _gui_input(&self, #[base] base: &godot_inherit, input_event:Ref<InputEvent>)
+	fn _gui_input(&mut self, #[base] base: &godot_inherit, input_event:Ref<InputEvent>)
 	{
 		let e = unsafe {input_event.assume_safe()};
 
@@ -84,7 +100,16 @@ impl Editor
 				base.release_focus();
 			}
 
-			// if key_event.scancode() == 
+			if (key_event.is_pressed() && key_event.is_echo()) || !key_event.is_pressed(){
+				()
+			}else if key_event.scancode() == keylist::KEY_LEFT{
+				if self.cursor != 0
+				{
+					self.cursor -= 1;
+				}
+			}else if key_event.scancode() == keylist::KEY_RIGHT{
+				if self.cursor != 
+			}
 		}
 	}
 
