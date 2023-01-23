@@ -247,7 +247,7 @@ def remove_module(name:str):
 	if not isdir(name): # If module does not exist
 		print(f"Module {name} not found")
 		return None
-	shutil.rmtree(name) # The only time shutil is used in all of this
+	shutil.rmtree(name)
 	workspace_cargo:dict = toml.loads(open("Cargo.toml", "rt").read())
 	workspace_cargo["workspace"]["members"].remove(name) # Remove the module as a workspace ember
 	print(f"Removed module {name}")
@@ -311,9 +311,7 @@ def build(path_to_root:str):
 		print("Please specify a directory that has a project.godot file")
 		return None
 	os.makedirs("gdnative-rs-out", exist_ok=True)
-	lib_indir = get_as_respath(path_to_root) + "gdnative-rs-src/target/release/" # Where the modules as dynamic libraries are put into
-	if not BUILD_AS_RELEASE:
-		lib_indir = get_as_respath(path_to_root) + "gdnative-rs-src/target/debug/"
+	lib_indir = get_as_respath(path_to_root) + "gdnative-rs-out/"
 	output_dir = get_as_respath(path_to_root) + "gdnative-rs-out/" # Where GDNativeLib resources are put into
 	is_platform = 1
 
@@ -325,10 +323,11 @@ def build(path_to_root:str):
 	
 	libs:list[str] = []
 
-	if BUILD_AS_RELEASE:
-		os.chdir("target/release/")
-	else:
-		os.chdir("target/debug/")
+	cargo_target_dir = "target/release/"
+	if not BUILD_AS_RELEASE:
+		cargo_target_dir = "target/debug/"
+	
+	os.chdir(cargo_target_dir)
 
 	for f in os.listdir():
 		if isdir(f): continue
@@ -347,6 +346,8 @@ def build(path_to_root:str):
 	
 	os.chdir("..")
 	os.makedirs("gdnative-rs-out", exist_ok=True)
+	for lib in libs:
+		shutil.move("gdnative-rs-src/" + cargo_target_dir + lib, "gdnative-rs-out")
 	os.chdir("gdnative-rs-out")
 
 	for lib in libs:
